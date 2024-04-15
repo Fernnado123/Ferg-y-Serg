@@ -1,0 +1,136 @@
+#include <iostream>
+#include <string>
+#include <cctype> // for isdigit()
+#include <cmath> // for pow()
+
+using namespace std;
+
+// Function prototypes
+float evaluateExpression(const string& expression);
+float evaluateParentheses(const string& expression, size_t& index);
+float evaluateExponents(const string& expression, size_t& index);
+float evaluateMultiplicationDivision(const string& expression, size_t& index);
+float evaluateAdditionSubtraction(const string& expression, size_t& index);
+
+int main() {
+    string expression;
+    
+    cout << "Enter the arithmetic expression you want to evaluate: ";
+    getline(cin, expression);
+
+    float result = evaluateExpression(expression);
+    
+    cout << "Result: " << result << endl;
+
+    return 0;
+}
+
+// Function to evaluate arithmetic expression
+float evaluateExpression(const string& expression) {
+    size_t index = 0;
+    return evaluateParentheses(expression, index);
+}
+
+// Function to evaluate expression within parentheses
+float evaluateParentheses(const string& expression, size_t& index) {
+    float result = 0.0;
+    bool insideParentheses = false;
+    string subExpression = "";
+    size_t subIndex = 0;
+
+    while (index < expression.length()) {
+        char c = expression[index++];
+
+        if (c == '(') {
+            insideParentheses = true;
+            subExpression = "";
+        } else if (c == ')') {
+            insideParentheses = false;
+            result = evaluateExpression(subExpression);
+            break;
+        } else if (insideParentheses) {
+            subExpression += c;
+        }
+    }
+
+    return result;
+}
+
+// Function to evaluate exponents
+float evaluateExponents(const string& expression, size_t& index) {
+    float result = evaluateMultiplicationDivision(expression, index);
+    return result;
+}
+
+// Function to evaluate multiplication and division
+float evaluateMultiplicationDivision(const string& expression, size_t& index) {
+    float result = evaluateAdditionSubtraction(expression, index);
+    return result;
+}
+
+// Function to evaluate addition and subtraction
+float evaluateAdditionSubtraction(const string& expression, size_t& index) {
+    float result = 0.0;
+    char op = '+';
+    float num = 0.0;
+    bool num_started = false;
+    bool negative = false;
+    bool decimal = false;
+    float decimal_place = 0.1;
+
+    while (index < expression.length()) {
+        char c = expression[index++];
+
+        if (isdigit(c) || c == '.') {
+            if (c == '.') {
+                decimal = true;
+                continue;
+            }
+            if (!num_started) {
+                num_started = true;
+                num = c - '0';
+                if (decimal) {
+                    decimal_place = 0.1;
+                }
+            } else {
+                if (decimal) {
+                    num += (c - '0') * decimal_place;
+                    decimal_place *= 0.1;
+                } else {
+                    num = num * 10 + (c - '0');
+                }
+            }
+        } else {
+            if (num_started) {
+                switch (op) {
+                    case '+':
+                        result += num;
+                        break;
+                    case '-':
+                        result -= num;
+                        break;
+                }
+                num_started = false;
+                num = 0.0;
+                decimal = false;
+                decimal_place = 0.1;
+            }
+            if (c == '+' || c == '-') {
+                op = c;
+            }
+        }
+    }
+
+    if (num_started) {
+        switch (op) {
+            case '+':
+                result += num;
+                break;
+            case '-':
+                result -= num;
+                break;
+        }
+    }
+
+    return result;
+}
