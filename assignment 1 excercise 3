@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    // Variables to store user information
+    string name, gender;
+    int age, height_feet, height_inches, weight_pounds;
+    double bmi;
+
+    // Get user input
+    cout << "Enter your name: ";
+    getline(cin, name);
+
+    cout << "Enter your age: ";
+    cin >> age;
+
+    cout << "Enter your gender (male/female): ";
+    cin >> gender;
+
+    cout << "Enter your height by feet: ";
+    cin >> height_feet;
+
+    cout << "Enter your height by inches: ";
+    cin >> height_inches;
+
+    cout << "Enter your weight in pounds: ";
+    cin >> weight_pounds;
+
+    // Calculate height in inches
+    int height_inches_total = (height_feet * 12) + height_inches;
+
+    // Calculate BMI
+    bmi = (703.0 * weight_pounds) / (height_inches_total * height_inches_total);
+
+    // Determine BMI status
+    string bmi_status;
+    if (bmi < 18.5) {
+        bmi_status = "Underweight";
+    } else if (bmi < 25) {
+        bmi_status = "Normal weight";
+    } else if (bmi < 30) {
+        bmi_status = "Overweight";
+    } else {
+        bmi_status = "Obese";
+    }
+
+    // Output user information and BMI status
+    cout << "\nName: " << name << endl;
+    cout << "Age: " << age << endl;
+    cout << "Gender: " << gender << endl;
+    cout << "Height by feet: " << height_feet << " feet" << endl;
+    cout << "Height by inches: " << height_inches << " inches" << endl;
+    cout << "Weight in pounds: " << weight_pounds << " lbs" << endl;
+    cout << "BMI: " << bmi << " (" << bmi_status << ")" << endl;
+
+    return 0;
+}
