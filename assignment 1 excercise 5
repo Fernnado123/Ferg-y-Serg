@@ -1,0 +1,194 @@
+
+#include <iostream>
+#include <cmath>
+#include <string>
+
+using namespace std;
+
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+double divide(double a, double b) {
+    if (b == 0) {
+        cout << "Error: Division by zero!" << endl;
+        return 0;
+    }
+    return a / b;
+}
+
+double modulus(double a, double b) {
+    return fmod(a, b);
+}
+
+double exponent(double a, double b) {
+    return pow(a, b);
+}
+
+double sine(double x) {
+    return sin(x);
+}
+
+double arcsine(double x) {
+    return asin(x);
+}
+
+double cosine(double x) {
+    return cos(x);
+}
+
+double arccosine(double x) {
+    return acos(x);
+}
+
+double tangent(double x) {
+    return tan(x);
+}
+
+double arctangent(double x) {
+    return atan(x);
+}
+
+double arctangent2(double y, double x) {
+    return atan2(y, x);
+}
+
+double squareRoot(double x) {
+    return sqrt(x);
+}
+
+double ceilFunction(double x) {
+    return ceil(x);
+}
+
+double absolute(double x) {
+    return abs(x);
+}
+
+double floorFunction(double x) {
+    return floor(x);
+}
+
+double maximum(double a, double b) {
+    return max(a, b);
+}
+
+double minimum(double a, double b) {
+    return min(a, b);
+}
+
+double logarithm(double x) {
+    return log(x);
+}
+
+double logarithm10(double x) {
+    return log10(x);
+}
+
+double logarithm2(double x) {
+    return log2(x);
+}
+
+double roundFunction(double x) {
+    return round(x);
+}
+
+int main() {
+    string operand;
+    double num1, num2;
+
+    cout << "Enter the operand (+, -, *, /, %, ^, sin, asin, cos, acos, tan, atan, atan2, sqrt, ceil, abs, floor, max, min, log, log10, log2, round): ";
+    cin >> operand;
+
+    if (operand == "+" || operand == "-" || operand == "*" || operand == "/" || operand == "%" || operand == "^") {
+        cout << "Enter two numbers: ";
+        cin >> num1 >> num2;
+
+        char op = operand[0];
+        switch (op) {
+        case '+':
+            cout << "Result: " << add(num1, num2) << endl;
+            break;
+        case '-':
+            cout << "Result: " << subtract(num1, num2) << endl;
+            break;
+        case '*':
+            cout << "Result: " << multiply(num1, num2) << endl;
+            break;
+        case '/':
+            cout << "Result: " << divide(num1, num2) << endl;
+            break;
+        case '%':
+            cout << "Result: " << modulus(num1, num2) << endl;
+            break;
+        case '^':
+            cout << "Result: " << exponent(num1, num2) << endl;
+            break;
+        default:
+            cout << "Invalid operand!" << endl;
+        }
+    }
+    else if (operand == "sin" || operand == "cos" || operand == "tan" || operand == "asin" || operand == "acos" || operand == "atan" || operand == "sqrt" || operand == "ceil" || operand == "abs" || operand == "floor" || operand == "max" || operand == "min" || operand == "log" || operand == "log10" || operand == "log2" || operand == "round") {
+        cout << "Enter a number: ";
+        cin >> num1;
+
+        if (operand == "sin")
+            cout << "Result: " << sine(num1) << endl;
+        else if (operand == "cos")
+            cout << "Result: " << cosine(num1) << endl;
+        else if (operand == "tan")
+            cout << "Result: " << tangent(num1) << endl;
+        else if (operand == "asin")
+            cout << "Result: " << arcsine(num1) << endl;
+        else if (operand == "acos")
+            cout << "Result: " << arccosine(num1) << endl;
+        else if (operand == "atan")
+            cout << "Result: " << arctangent(num1) << endl;
+        else if (operand == "atan2") {
+            cout << "Enter the second number: ";
+            cin >> num2;
+            cout << "Result: " << arctangent2(num1, num2) << endl;
+        }
+        else if (operand == "sqrt")
+            cout << "Result: " << squareRoot(num1) << endl;
+        else if (operand == "ceil")
+            cout << "Result: " << ceilFunction(num1) << endl;
+        else if (operand == "abs")
+            cout << "Result: " << absolute(num1) << endl;
+        else if (operand == "floor")
+            cout << "Result: " << floorFunction(num1) << endl;
+        else if (operand == "max") {
+            cout << "Enter the second number: ";
+            cin >> num2;
+            cout << "Result: " << maximum(num1, num2) << endl;
+        }
+        else if (operand == "min") {
+            cout << "Enter the second number: ";
+            cin >> num2;
+            cout << "Result: " << minimum(num1, num2) << endl;
+        }
+        else if (operand == "log")
+            cout << "Result: " << logarithm(num1) << endl;
+        else if (operand == "log10")
+            cout << "Result: " << logarithm10(num1) << endl;
+        else if (operand == "log2")
+            cout << "Result: " << logarithm2(num1) << endl;
+        else if (operand == "round")
+            cout << "Result: " << roundFunction(num1) << endl;
+        else
+            cout << "Invalid operand!" << endl;
+    }
+    else {
+        cout << "Invalid operand!" << endl;
+    }
+
+    return 0;
+}
