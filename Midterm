@@ -1,0 +1,152 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+class BankAccount {
+private:
+    std::string name;
+    int accountNumber;
+    double balance;
+
+public:
+    // Constructor
+    BankAccount(std::string n, double initialBalance) {
+        name = n;
+        balance = initialBalance;
+        srand(time(0));
+        accountNumber = rand(); // Generate a random account number
+    }
+
+    // Deposit money
+    void deposit(double amount) {
+        balance += amount;
+    }
+
+    // Withdraw money
+    void withdraw(double amount) {
+        if (balance >= amount)
+            balance -= amount;
+        else
+            std::cout << "Insufficient balance" << std::endl;
+    }
+
+    // Get current balance
+    double getBalance() {
+        return balance;
+    }
+
+    // Get account number
+    int getAccountNumber() {
+        return accountNumber;
+    }
+};
+
+int main() {
+    const int MAX_ACCOUNTS = 10;
+    BankAccount *accounts[MAX_ACCOUNTS] = {nullptr};
+    int numAccounts = 0;
+
+    std::cout << "Welcome to Chase" << std::endl;
+
+    int choice;
+    do {
+        std::cout << "Type a number that you would like to perform:" << std::endl;
+        std::cout << "1. Create a new bank account" << std::endl;
+        std::cout << "2. Deposit money" << std::endl;
+        std::cout << "3. Withdraw money" << std::endl;
+        std::cout << "4. Display current balance" << std::endl;
+        std::cout << "5. Exit" << std::endl;
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                std::string name;
+                double initialBalance;
+                std::cout << "Enter your name: ";
+                std::cin >> name;
+                std::cout << "Enter initial balance: ";
+                std::cin >> initialBalance;
+
+                accounts[numAccounts] = new BankAccount(name, initialBalance);
+                std::cout << "Account created successfully!" << std::endl;
+                std::cout << "Account Number: " << accounts[numAccounts]->getAccountNumber() << std::endl;
+                std::cout << "Balance: " << accounts[numAccounts]->getBalance() << std::endl;
+                numAccounts++;
+                break;
+            }
+            case 2: {
+                int accNum;
+                std::cout << "Enter account number: ";
+                std::cin >> accNum;
+
+                bool found = false;
+                for (int i = 0; i < numAccounts; i++) {
+                    if (accounts[i]->getAccountNumber() == accNum) {
+                        double amount;
+                        std::cout << "Enter amount to deposit: ";
+                        std::cin >> amount;
+                        accounts[i]->deposit(amount);
+                        std::cout << "Amount deposited successfully!" << std::endl;
+                        std::cout << "Current Balance: " << accounts[i]->getBalance() << std::endl;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                    std::cout << "Account not found" << std::endl;
+                break;
+            }
+            case 3: {
+                int accNum;
+                std::cout << "Enter account number: ";
+                std::cin >> accNum;
+
+                bool found = false;
+                for (int i = 0; i < numAccounts; i++) {
+                    if (accounts[i]->getAccountNumber() == accNum) {
+                        double amount;
+                        std::cout << "Enter amount to withdraw: ";
+                        std::cin >> amount;
+                        accounts[i]->withdraw(amount);
+                        std::cout << "Amount withdrawn successfully!" << std::endl;
+                        std::cout << "Current Balance: " << accounts[i]->getBalance() << std::endl;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                    std::cout << "Account not found" << std::endl;
+                break;
+            }
+            case 4: {
+                int accNum;
+                std::cout << "Enter account number: ";
+                std::cin >> accNum;
+
+                bool found = false;
+                for (int i = 0; i < numAccounts; i++) {
+                    if (accounts[i]->getAccountNumber() == accNum) {
+                        std::cout << "Current Balance: " << accounts[i]->getBalance() << std::endl;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                    std::cout << "Account not found" << std::endl;
+                break;
+            }
+            case 5:
+                std::cout << "Exiting..." << std::endl;
+                break;
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    } while (choice != 5);
+
+    // Clean up dynamic memory
+    for (int i = 0; i < numAccounts; i++) {
+        delete accounts[i];
+    }
+
+    return 0;
+}
