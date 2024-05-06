@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct MultiplicationTableParams {
+    int startRange;
+    int endRange;
+    int startTable;
+    int endTable;
+};
+
+void generateMultiplicationTable(MultiplicationTableParams params) {
+    cout << "\nHere is the multiplication table for " << params.startRange << " to " << params.endRange << " in the range of " << params.startTable << " to " << params.endTable << endl;
+    cout << "X ";
+    for (int i = params.startTable; i <= params.endTable; ++i) {
+        cout << i << " ";
+    }
+    cout << endl;
+    for (int i = params.startRange; i <= params.endRange; ++i) {
+        cout << i << " ";
+        for (int j = params.startTable; j <= params.endTable; ++j) {
+            cout << i * j << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    while (true) {
+        MultiplicationTableParams params;
+
+        cout << "Enter the starting range for Multiplication Table: ";
+        cin >> params.startRange;
+        cout << "Enter the ending range for Multiplication Table: ";
+        cin >> params.endRange;
+        cout << "Enter the starting range for multiplying the numbers in Multiplication Table: ";
+        cin >> params.startTable;
+        cout << "Enter the ending range for multiplying the numbers in Multiplication Table: ";
+        cin >> params.endTable;
+
+        generateMultiplicationTable(params);
+
+        cout << "\nDo you want to create another multiplication table? (yes/no): ";
+        string choice;
+        cin >> choice;
+        if (choice != "yes") {
+            cout << "Thank you for using the multiplication table generator!" << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
