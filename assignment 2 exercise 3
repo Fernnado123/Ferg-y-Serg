@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Define a struct to store user information
+struct UserInfo {
+    string name;
+    string gender;
+    int age;
+    int height_feet;
+    int height_inches;
+    int weight_pounds;
+    double bmi;
+    string bmi_status;
+};
+
+int main() {
+    // Declare a variable of type UserInfo to store user information
+    UserInfo user;
+
+    // Get user input
+    cout << "Enter your name: ";
+    getline(cin, user.name);
+
+    cout << "Enter your age: ";
+    cin >> user.age;
+
+    cout << "Enter your gender (male/female): ";
+    cin >> user.gender;
+
+    cout << "Enter your height by feet: ";
+    cin >> user.height_feet;
+
+    cout << "Enter your height by inches: ";
+    cin >> user.height_inches;
+
+    cout << "Enter your weight in pounds: ";
+    cin >> user.weight_pounds;
+
+    // Calculate height in inches
+    int height_inches_total = (user.height_feet * 12) + user.height_inches;
+
+    // Calculate BMI
+    user.bmi = (703.0 * user.weight_pounds) / (height_inches_total * height_inches_total);
+
+    // Determine BMI status
+    if (user.bmi < 18.5) {
+        user.bmi_status = "Underweight";
+    } else if (user.bmi < 25) {
+        user.bmi_status = "Normal weight";
+    } else if (user.bmi < 30) {
+        user.bmi_status = "Overweight";
+    } else {
+        user.bmi_status = "Obese";
+    }
+
+    // Output user information and BMI status
+    cout << "\nName: " << user.name << endl;
+    cout << "Age: " << user.age << endl;
+    cout << "Gender: " << user.gender << endl;
+    cout << "Height by feet: " << user.height_feet << " feet" << endl;
+    cout << "Height by inches: " << user.height_inches << " inches" << endl;
+    cout << "Weight in pounds: " << user.weight_pounds << " lbs" << endl;
+    cout << "BMI: " << user.bmi << " (" << user.bmi_status << ")" << endl;
+
+    return 0;
+}
