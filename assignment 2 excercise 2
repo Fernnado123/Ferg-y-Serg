@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Birthday {
+    int month;
+    int day;
+    int year;
+};
+
+int main() {
+    char choice;
+    do {
+        Birthday birthday;
+
+        cout << "Welcome to Birthday Date Meaning Generator!" << endl;
+        cout << "Please enter the month of your birthday: ";
+        cin >> birthday.month;
+        cout << "Please enter the day of your birthday: ";
+        cin >> birthday.day;
+        cout << "Please enter the year of your birthday: ";
+        cin >> birthday.year;
+
+        switch (birthday.month) {
+        case 1:
+            cout << "The month of January means Janus" << endl;
+            break;
+        case 2:
+            cout << "The month of February means Februa" << endl;
+            break;
+        case 3:
+            cout << "The month of March means Mars" << endl;
+            break;
+        case 4:
+            cout << "The month of April means Aphrodite" << endl;
+            break;
+        case 5:
+            cout << "The month of May means Maia" << endl;
+            break;
+        case 6:
+            cout << "The month of June means Juno" << endl;
+            break;
+        case 7:
+            cout << "The month of July means Julius Caesar" << endl;
+            break;
+        case 8:
+            cout << "The month of August means Augustus Caesar" << endl;
+            break;
+        case 9:
+            cout << "The month of September means Seven" << endl;
+            break;
+        case 10:
+            cout << "The month of October means Octavian" << endl;
+            break;
+        case 11:
+            cout << "The month of November means Novem" << endl;
+            break;
+        case 12:
+            cout << "The month of December means Decem" << endl;
+            break;
+        default:
+            cout << "Invalid month." << endl;
+            break;
+        }
+
+        if (birthday.month == 1 && birthday.day == 1)
+            cout << "The 1st of January means Self-Started" << endl;
+
+        if (birthday.year >= 2000 && birthday.year <= 2023)
+            cout << "The year of " << birthday.year << " means that you are a millennial" << endl;
+
+        cout << "Would you like to try another one? (Y/N): ";
+        cin >> choice;
+    } while (choice == 'y' || choice == 'Y');
+
+    cout << "Thanks for playing!" << endl;
+
+    return 0;
+}
