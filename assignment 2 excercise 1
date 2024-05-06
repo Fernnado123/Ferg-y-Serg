@@ -1,0 +1,131 @@
+#include <iostream>
+#include <string>
+#include <cctype> // for isdigit()
+#include <cmath> // for pow()
+
+using namespace std;
+
+struct ExpressionEvaluator {
+    string expression;
+    size_t index;
+
+    ExpressionEvaluator(const string& exp) : expression(exp), index(0) {}
+
+    float evaluateExpression() {
+        index = 0;
+        return evaluateParentheses();
+    }
+
+    float evaluateParentheses() {
+        float result = 0.0;
+        bool insideParentheses = false;
+        string subExpression = "";
+
+        while (index < expression.length()) {
+            char c = expression[index++];
+
+            if (c == '(') {
+                insideParentheses = true;
+                subExpression = "";
+            } else if (c == ')') {
+                insideParentheses = false;
+                result = evaluateExpression(subExpression);
+                break;
+            } else if (insideParentheses) {
+                subExpression += c;
+            }
+        }
+
+        return result;
+    }
+
+    float evaluateExponents() {
+        float result = evaluateMultiplicationDivision();
+        return result;
+    }
+
+    float evaluateMultiplicationDivision() {
+        float result = evaluateAdditionSubtraction();
+        return result;
+    }
+
+    float evaluateAdditionSubtraction() {
+        float result = 0.0;
+        char op = '+';
+        float num = 0.0;
+        bool num_started = false;
+        bool negative = false;
+        bool decimal = false;
+        float decimal_place = 0.1;
+
+        while (index < expression.length()) {
+            char c = expression[index++];
+
+            if (isdigit(c) || c == '.') {
+                if (c == '.') {
+                    decimal = true;
+                    continue;
+                }
+                if (!num_started) {
+                    num_started = true;
+                    num = c - '0';
+                    if (decimal) {
+                        decimal_place = 0.1;
+                    }
+                } else {
+                    if (decimal) {
+                        num += (c - '0') * decimal_place;
+                        decimal_place *= 0.1;
+                    } else {
+                        num = num * 10 + (c - '0');
+                    }
+                }
+            } else {
+                if (num_started) {
+                    switch (op) {
+                        case '+':
+                            result += num;
+                            break;
+                        case '-':
+                            result -= num;
+                            break;
+                    }
+                    num_started = false;
+                    num = 0.0;
+                    decimal = false;
+                    decimal_place = 0.1;
+                }
+                if (c == '+' || c == '-') {
+                    op = c;
+                }
+            }
+        }
+
+        if (num_started) {
+            switch (op) {
+                case '+':
+                    result += num;
+                    break;
+                case '-':
+                    result -= num;
+                    break;
+            }
+        }
+
+        return result;
+    }
+};
+
+int main() {
+    string expression;
+
+    cout << "Enter the arithmetic expression you want to evaluate: ";
+    getline(cin, expression);
+
+    ExpressionEvaluator evaluator(expression);
+    float result = evaluator.evaluateExpression();
+
+    cout << "Result: " << result << endl;
+
+    return 0;
+}
