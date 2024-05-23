@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+
+// Function to perform recursive bubble sort
+void recursiveBubbleSort(int arr[], int n) {
+    // Base case: if only one element is left, the array is already sorted
+    if (n == 1)
+        return;
+
+    // One pass of bubble sort. After this pass, the largest element is bubbled to the end.
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            // Swap arr[i] and arr[i+1]
+            int temp = arr[i];
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
+        }
+    }
+
+    // Recur for remaining elements
+    recursiveBubbleSort(arr, n - 1);
+}
+
+int main() {
+    // Input course information
+    std::string courseDept, courseNum, courseName;
+    std::cout << "Enter course department: ";
+    std::cin >> courseDept;
+    std::cout << "Enter course number: ";
+    std::cin >> courseNum;
+    std::cout << "Enter course name: ";
+    std::cin.ignore(); // Ignore newline character
+    std::getline(std::cin, courseName);
+
+    // Input assignment information
+    std::string assignmentName;
+    int pointsPossible;
+    std::cout << "Enter assignment name: ";
+    std::getline(std::cin, assignmentName);
+    std::cout << "Enter points possible for the assignment: ";
+    std::cin >> pointsPossible;
+
+    // Input number of students
+    int numStudents;
+    std::cout << "Enter number of students: ";
+    std::cin >> numStudents;
+
+    // Dynamically allocate array to store scores
+    int *scores = new int[numStudents];
+
+    // Input scores
+    for (int i = 0; i < numStudents; i++) {
+        std::cout << "Enter score for student " << i + 1 << ": ";
+        std::cin >> scores[i];
+    }
+
+    // Sort scores using recursive bubble sort
+    recursiveBubbleSort(scores, numStudents);
+
+    // Output sorted scores
+    std::cout << "Sorted scores: ";
+    for (int i = 0; i < numStudents; i++) {
+        std::cout << scores[i] << " ";
+    }
+    std::cout << std::endl;
+
+    // Deallocate dynamically allocated memory
+    delete[] scores;
+
+    return 0;
+}
