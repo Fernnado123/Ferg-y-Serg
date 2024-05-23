@@ -1,0 +1,153 @@
+#include <iostream>
+#include <cmath>
+
+const double PI = 3.14159;
+
+// Base class Shape
+class Shape {
+protected:
+    double width, height;
+
+public:
+    Shape(double w, double h) : width(w), height(h) {}
+
+    virtual double area() = 0; // Pure virtual function
+    virtual double perimeter() = 0; // Pure virtual function
+
+    virtual void display() {
+        std::cout << "Shape: ";
+    }
+};
+
+// Derived class Rectangle
+class Rectangle : public Shape {
+public:
+    Rectangle(double w, double h) : Shape(w, h) {}
+
+    double area() override {
+        return width * height;
+    }
+
+    double perimeter() override {
+        return 2 * (width + height);
+    }
+
+    void display() override {
+        Shape::display();
+        std::cout << "Rectangle\n";
+    }
+};
+
+// Derived class Triangle
+class Triangle : public Shape {
+public:
+    Triangle(double w, double h) : Shape(w, h) {}
+
+    double area() override {
+        return 0.5 * width * height;
+    }
+
+    double perimeter() override {
+        double hypotenuse = sqrt(width * width + height * height);
+        return width + height + hypotenuse;
+    }
+
+    void display() override {
+        Shape::display();
+        std::cout << "Triangle\n";
+    }
+};
+
+// Derived class Circle
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : Shape(0, 0), radius(r) {}
+
+    double area() override {
+        return PI * radius * radius;
+    }
+
+    double perimeter() override {
+        return 2 * PI * radius;
+    }
+
+    void display() override {
+        Shape::display();
+        std::cout << "Circle\n";
+    }
+};
+
+// Derived class Square
+class Square : public Shape {
+private:
+    double side;
+
+public:
+    Square(double s) : Shape(s, s), side(s) {}
+
+    double area() override {
+        return side * side;
+    }
+
+    double perimeter() override {
+        return 4 * side;
+    }
+
+    void display() override {
+        Shape::display();
+        std::cout << "Square\n";
+    }
+};
+
+int main() {
+    char choice;
+    std::cout << "Choose a shape to calculate (R for Rectangle, T for Triangle, C for Circle, S for Square): ";
+    std::cin >> choice;
+
+    Shape* shapePtr = nullptr;
+
+    switch (choice) {
+        case 'R':
+        case 'r':
+            shapePtr = new Rectangle(0, 0);
+            break;
+        case 'T':
+        case 't':
+            shapePtr = new Triangle(0, 0);
+            break;
+        case 'C':
+        case 'c':
+            shapePtr = new Circle(0);
+            break;
+        case 'S':
+        case 's':
+            shapePtr = new Square(0);
+            break;
+        default:
+            std::cout << "Invalid choice!\n";
+            return 1;
+    }
+
+    std::cout << "Enter dimensions: ";
+    if (choice == 'C' || choice == 'c') {
+        double radius;
+        std::cin >> radius;
+        dynamic_cast<Circle*>(shapePtr)->Circle::Circle(radius);
+    }
+    else {
+        double width, height;
+        std::cin >> width >> height;
+        shapePtr->Shape::Shape(width, height);
+    }
+
+    std::cout << "Area: " << shapePtr->area() << std::endl;
+    std::cout << "Perimeter: " << shapePtr->perimeter() << std::endl;
+    shapePtr->display();
+
+    delete shapePtr;
+
+    return 0;
+}
